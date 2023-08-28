@@ -13,6 +13,7 @@
     "@types/node": "^16.18.43",
     "@types/react": "^18.2.21",
     "@types/react-dom": "^18.2.7",
+    "axios": "^1.5.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-scripts": "5.0.1",
@@ -24,7 +25,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "e2e": "cypress run"
+    "e2e": "cypress run",
+    "stub-server": "json-server --watch stub-server/db.json --port 8080"
   },
   "eslintConfig": {
     "extends": [
@@ -45,6 +47,12 @@
     ]
   },
   "devDependencies": {
-    "cypress": "^12.17.4"
+    "cypress": "^12.17.4",
+    "json-server": "^0.17.3"
+  },
+  "jest": {
+    "moduleNameMapper": {
+      "axios": "axios/dist/node/axios.cjs"
+    }
   }
 }
