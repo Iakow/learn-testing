@@ -16,6 +16,8 @@
     "axios": "^1.5.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-router": "^6.15.0",
+    "react-router-dom": "^6.15.0",
     "react-scripts": "5.0.1",
     "typescript": "^4.9.5",
     "web-vitals": "^2.1.4"
@@ -26,7 +28,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "e2e": "cypress run",
-    "stub-server": "json-server --watch stub-server/db.json --port 8080"
+    "stub-server": "json-server --watch stub-server/books.json --port 8080"
   },
   "eslintConfig": {
     "extends": [
