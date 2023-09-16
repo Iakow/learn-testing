@@ -34,26 +34,37 @@ export const useBooks = () => {
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
+  const [term, setTerm] = useState<string>("");
+
+  const fetchBooks = async (term: string) => {
+    setError(false);
+    setLoading(true);
+
+    try {
+      const response = await axios.get(
+        `http://localhost:8080/books?q=${term}&_sort=id`
+      );
+      setBooks(response.data);
+    } catch (e) {
+      setError(true);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const fetchBooks = async () => {
-      setError(false);
-      setLoading(true);
-      try {
-        const res = await axios.get("http://localhost:8080/books");
-        setBooks(res.data);
-      } catch (e) {
-        setError(true);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchBooks();
+    fetchBooks(term);
   }, []);
+
+  useEffect(() => {
+    fetchBooks(term);
+  }, [term]);
 
   return {
     loading,
     error,
     books,
+    term,
+    setTerm,
   };
 };

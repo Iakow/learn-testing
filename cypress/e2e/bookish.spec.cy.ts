@@ -1,16 +1,26 @@
 import axios from "axios";
 
+const gotoApp = () => {
+  cy.visit("http://127.0.0.1:3000/");
+};
+
+const checkAppTitle = () => {
+  cy.get('h2[data-test="heading"]').contains("Bookish");
+};
+
+const cleanUpStubBooks = () => {
+  return axios
+    .delete("http://127.0.0.1:8080/books?_cleanup=true")
+    .catch((err) => err);
+};
+
 describe("Bookish application", function () {
   // before(() => {
-  //   return axios
-  //     .delete("http://127.0.0.1:8080/books?_cleanup=true")
-  //     .catch((err) => err);
+  //   cleanUpStubBooks();
   // });
 
   // afterEach(() => {
-  //   return axios
-  //     .delete("http://127.0.0.1:8080/books?_cleanup=true")
-  //     .catch((err) => err);
+  //   cleanUpStubBooks();
   // });
 
   // beforeEach(async () => {
@@ -33,8 +43,13 @@ describe("Bookish application", function () {
   //   });
   // });
 
+  it("Visits the bookish", () => {
+    gotoApp();
+    checkAppTitle();
+  });
+
   it("Shows a book list", () => {
-    cy.visit("http://127.0.0.1:3000/");
+    gotoApp();
     cy.get('div[data-test="book-list"]').should("exist");
     cy.get("div.book-item").should((books) => {
       // eslint-disable-next-line jest/valid-expect
@@ -52,9 +67,17 @@ describe("Bookish application", function () {
   });
 
   it("Goes to the detail page", () => {
-    cy.visit("127.0.0.1:3000/");
+    gotoApp();
     cy.get("div.book-item").contains("View Details").eq(0).click();
     cy.url().should("include", "/books/1");
     cy.get("h2.book-title").contains("Refactoring");
+  });
+
+  it("Searches for a title", () => {
+    gotoApp();
+    cy.get("div.book-item").should("have.length", 4);
+    cy.get('[data-test="search"] input').type("design");
+    cy.get("div.book-item").should("have.length", 1);
+    cy.get("div.book-item").eq(0).contains("Domain-driven design");
   });
 });
