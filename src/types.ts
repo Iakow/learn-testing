@@ -3,3 +3,10 @@ export type Book = {
   id: number;
   description?: string;
 };
+
+export type BookListStateType = {
+  books: Book[];
+  loading: boolean;
+  error: boolean;
+  term: string;
+};
