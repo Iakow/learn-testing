@@ -1,6 +1,7 @@
 import React from "react";
 import { render, screen, within } from "@testing-library/react";
 import BookDetail from "./BookDetail";
+import { customRender } from "../renderWithReduxProvider";
 
 describe("BookList", () => {
   it("renders title", () => {
@@ -10,7 +11,7 @@ describe("BookList", () => {
         name: "Refactoring",
       },
     };
-    render(<BookDetail {...props} />);
+    customRender(<BookDetail {...props} />);
     const title = screen.getByRole("heading");
     expect(title.innerHTML).toEqual(props.book.name);
   });
@@ -26,7 +27,7 @@ describe("BookList", () => {
           "their software.",
       },
     };
-    render(<BookDetail {...props} />);
+    customRender(<BookDetail {...props} />);
     const description = screen.getByText(props.book.description);
     expect(description).toBeInTheDocument();
   });
@@ -38,25 +39,26 @@ describe("BookList", () => {
         name: "Refactoring",
       },
     };
-    render(<BookDetail {...props} />);
+    customRender(<BookDetail {...props} />);
     const description = screen.getByTestId("book-description");
     expect(description).toHaveTextContent(props.book.name);
   });
 
-  // it("Shows *more* link when description is too long", () => {
-  //   const props = {
-  //     book: {
-  //       id: 1,
-  //       name: "Refactoring",
-  //       description: "The book about how to do refactoring ....",
-  //     },
-  //   };
-  //   render(<BookDetail {...props} />);
-  //   const link = screen.getByText("Show more...");
-  //   expect(link).toBeInTheDocument();
-  //   const description = screen.getByTestId("book-description");
-  //   expect(description).toHaveTextContent(
-  //     "The book about how to do refactoring ...."
-  //   );
-  // });
+  it("renders review form", () => {
+    const props = {
+      book: {
+        id: 1,
+        name: "Refactoring",
+        description:
+          "Martin Fowler's Refactoring defined core ideas and techniques...",
+      },
+    };
+    customRender(<BookDetail {...props} />);
+    const nameInput = screen.getByTestId("name");
+    const contentInput = screen.getByTestId("content");
+    const button = screen.getByTestId("submit");
+    expect(nameInput).toBeInTheDocument();
+    expect(contentInput).toBeInTheDocument();
+    expect(button).toBeInTheDocument();
+  });
 });

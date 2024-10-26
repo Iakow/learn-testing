@@ -4,7 +4,7 @@ import { useParams } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../store";
 import { useEffect } from "react";
-import { fetchBookDetails } from "./bookDetailsSlise";
+import { fetchBookDetails } from "./bookDetailsSlice";
 
 const BookDetailContainer = () => {
   const { id = "" } = useParams<string>();

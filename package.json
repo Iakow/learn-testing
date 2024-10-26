@@ -25,12 +25,12 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
+    "stub-server": "cd stub-server && node server.js",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "e2e": "cypress run",
-    "stub-server": "json-server --watch stub-server/books.json --port 8080"
+    "e2e": "cypress run"
   },
   "eslintConfig": {
     "extends": [

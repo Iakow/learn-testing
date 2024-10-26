@@ -15,34 +15,6 @@ const cleanUpStubBooks = () => {
 };
 
 describe("Bookish application", function () {
-  // before(() => {
-  //   cleanUpStubBooks();
-  // });
-
-  // afterEach(() => {
-  //   cleanUpStubBooks();
-  // });
-
-  // beforeEach(async () => {
-  //   const books = [
-  //     { name: "Refactoring", id: 1 },
-  //     { name: "Domain-driven design", id: 2 },
-  //     { name: "Building Microservices", id: 3 },
-  //   ];
-  //
-  //   await axios.post("http://localhost:8080/books", books[0], {
-  //     headers: { "Content-Type": "application/json" },
-  //   });
-  //
-  //   await axios.post("http://localhost:8080/books", books[1], {
-  //     headers: { "Content-Type": "application/json" },
-  //   });
-  //
-  //   await axios.post("http://localhost:8080/books", books[2], {
-  //     headers: { "Content-Type": "application/json" },
-  //   });
-  // });
-
   it("Visits the bookish", () => {
     gotoApp();
     checkAppTitle();
@@ -79,5 +51,14 @@ describe("Bookish application", function () {
     cy.get('[data-test="search"] input').type("design");
     cy.get("div.book-item").should("have.length", 1);
     cy.get("div.book-item").eq(0).contains("Domain-driven design");
+  });
+
+  it("Write a review for a book", () => {
+    cy.visit("http://127.0.0.1:3000/books/1");
+    // checkBookDetail("Refactoring");
+    cy.get('input[name="name"]').type("Juntao Qiu");
+    cy.get('input[name="content"]').type("Excellent work!");
+    cy.get('button[name="submit"]').click();
+    cy.get('div[data-testid="reviews-container"]').should("have.length", 1);
   });
 });
